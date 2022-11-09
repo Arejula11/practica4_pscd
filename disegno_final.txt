@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
-* File:   practica_3.cpp
+* File:   practica_4.cpp
 * Author: Pablo Angusto Delgado 842255 y Miguel Aréjula Aisa 850068
 * Date:   noviembre 2022
 * Coms:   Práctica 3 de PSCD
@@ -54,7 +54,7 @@ void Estudiante(int nip,int& fila,  bool& hayFila, int D[N_FIL][N_COL], int& sil
     > 
     
     //esperar me sea asignada pareja y fila
-    //<await (hayFila = true)
+    <await (hayFila = true)
         miFila = fila;
         miPareja = pareja[nip];
         levantado++;>
