@@ -4,7 +4,7 @@
  * Date:   noviembre 2022
  * Coms:   Práctica 4 de PSCD
  *         Compilar mediante
- *          make -f Makefile_p3
+ *          make 
  * -----------------------------------------------------------------------------
  */
 

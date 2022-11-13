@@ -1,3 +1,12 @@
+/* ----------------------------------------------------------------------------
+ * File:   ControlParejas.cpp
+ * Author: Pablo Angusto Delgado 842255 y Miguel Aréjula Aisa 850068
+ * Date:   noviembre 2022
+ * Coms:   Práctica 4 de PSCD implementación de la clase monitor
+ *         Compilar mediante
+ *          make 
+ * -----------------------------------------------------------------------------
+ */
 
 #include "ControlParejas.hpp"
 #include <iostream>
