@@ -90,7 +90,7 @@ void Profesor(ControlParejas &monControlParejas) {
   //>
 }
 
-void leerFich(int D[N_FIL][N_COL]) {
+bool leerFich(int D[N_FIL][N_COL]) {
   ifstream f("datos.txt");
   if (f.is_open()) {
     for (int i = 0; i < N_FIL; i++) {
@@ -99,8 +99,10 @@ void leerFich(int D[N_FIL][N_COL]) {
       }
     }
     f.close();
+    return true;
   } else {
     cout << "No se ha podido abrir el fichero datos.txt" << endl;
+    return false;
   }
 }
 
@@ -110,8 +112,8 @@ int main() {
   int resultado[N_EST];
 
   // cargar "datos.txt" en "D"
-  leerFich(D);
-  thread Estu[60];
+  if(leerFich(D)){
+    thread Estu[60];
   thread Profe;
   Profe = thread(&Profesor, ref(monControlParejas));
 
@@ -127,4 +129,9 @@ int main() {
   cout << '\n';
   cout << "Prueba finalizada\n";
   return 0;
+  }else{
+    cout<<"Error\n";
+    return 1;
+  }
+  
 }

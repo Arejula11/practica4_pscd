@@ -51,7 +51,7 @@ void ControlParejas::heTerminado(int miFila) {
   // unique_lock<mutex> lck(mtxMonitor);
   examen_fin[miFila] = true;
   terminado++;
-  todosHanTerminado.notify_one();
+  todosHanTerminado.notify_all();
   haTerminadoCompa.notify_all();
 };
 void ControlParejas::dosSentados(int i) {
