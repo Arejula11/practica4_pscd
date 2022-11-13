@@ -9,10 +9,11 @@ const int N_COL = 1000;      // # de columnas
 class ControlParejas {
 public:
   ControlParejas();
+//   ~ControlParejas();
   void sillasVacias(int nip);
-  void filaDisponible(int &miFila, int nip);
+  void filaDisponible(int &miFila, int nip, int& miPareja);
   void compaTerminado(int miFila, int nip);
-  void heTerminado(int nip);
+  void heTerminado(int miFila);
   void dosSentados(int i);
   void almsLevantados();
   void todosTerminado();

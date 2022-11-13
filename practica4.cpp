@@ -52,7 +52,7 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
 
   // esperar me sea asignada pareja y fila
   //  <await (hayFila = true)
-  monControlParejas.filaDisponible(miFila, nip);
+  monControlParejas.filaDisponible(miFila, nip, miPareja);
   //>
   if (nip < miPareja) {
     // calcular máx de mi
@@ -69,7 +69,9 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
                 "|  " + to_string(resultado[nip]) + '\n';
   }
   // hacérselo llegar a mi pareja
-  monControlParejas.heTerminado(nip);
+//   cout<<to_string(nip)+"HE TERMINADO\n";
+  monControlParejas.heTerminado(miFila);
+
 }
 
 //----------------------------------------------------

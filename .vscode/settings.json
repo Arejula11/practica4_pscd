@@ -2,6 +2,9 @@
     "files.associations": {
         "ostream": "cpp",
         "condition_variable": "cpp",
-        "__mutex_base": "cpp"
+        "__mutex_base": "cpp",
+        "atomic": "cpp",
+        "string": "cpp",
+        "iostream": "cpp"
     }
 }

@@ -15,6 +15,8 @@ ControlParejas::ControlParejas() {
     examen_fin[i] = false; // inicializar vector
   }
 }
+// ControlParejas::~ControlParejas() {
+// }
 void ControlParejas::sillasVacias(int nip) {
   unique_lock<mutex> lck(mtxMonitor);
   while (silla >= 2) {
@@ -27,8 +29,11 @@ void ControlParejas::sillasVacias(int nip) {
     silla2 = nip;
     silla++;
   }
+  hayDosSentados.notify_one();
+  
+
 };
-void ControlParejas::filaDisponible(int &miFila, int nip) {
+void ControlParejas::filaDisponible(int &miFila, int nip, int& miPareja) {
   unique_lock<mutex> lck(mtxMonitor);
   while (!hayFila) {
     hayFilaDisponible.wait(lck);
@@ -36,17 +41,21 @@ void ControlParejas::filaDisponible(int &miFila, int nip) {
   miFila = fila;
   miPareja = pareja[nip];
   levantado++;
+  seHanLevantado.notify_one();
 };
 void ControlParejas::compaTerminado(int miFila, int nip) {
   unique_lock<mutex> lck(mtxMonitor);
-  while (examen_fin[miPareja]) {
+  while (!examen_fin[miFila]) {
     haTerminadoCompa.wait(lck);
   }
 };
-void ControlParejas::heTerminado(int nip) {
+void ControlParejas::heTerminado(int miFila) {
   // unique_lock<mutex> lck(mtxMonitor);
-  examen_fin[nip] = true;
+  examen_fin[miFila] = true;
   terminado++;
+//   cout<<to_string(terminado)+'\n';
+  todosHanTerminado.notify_one();
+  haTerminadoCompa.notify_all();
 };
 void ControlParejas::dosSentados(int i) {
   unique_lock<mutex> lck(mtxMonitor);
@@ -57,6 +66,8 @@ void ControlParejas::dosSentados(int i) {
   pareja[silla2] = silla1;
   fila = i;
   hayFila = true;
+  hayFilaDisponible.notify_one();
+  hayFilaDisponible.notify_one();
 };
 void ControlParejas::almsLevantados() {
   unique_lock<mutex> lck(mtxMonitor);
@@ -66,6 +77,8 @@ void ControlParejas::almsLevantados() {
   silla = 0;
   hayFila = false;
   levantado = 0;
+  haySillasVacias.notify_all();
+  haySillasVacias.notify_all();
 };
 void ControlParejas::todosTerminado() {
   unique_lock<mutex> lck(mtxMonitor);
