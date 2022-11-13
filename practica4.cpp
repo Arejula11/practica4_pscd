@@ -7,6 +7,15 @@
 *          make -f Makefile_p3
 * ----------------------------------------------------------------------------- */
 
+
+#include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <thread>
+
+
+using namespace std;
+
 const int N_EST = 60; //# de estudiantes
 const int N_FIL = N_EST/2; //# de filas en la matriz 
 const int N_COL = 1000; //# de columnas
@@ -38,11 +47,11 @@ int sumaFila(int D[N_FIL][N_COL],int fila) {
 }
 
 //----------------------------------------------------
-void Estudiante(int nip,int& fila,  bool& hayFila, int D[N_FIL][N_COL], int& silla, int resultado[N_EST], bool examen_fin[N_EST], int& silla1, int& silla2, int pareja[]) {
+void Estudiante(int nip,int& fila,  bool& hayFila, int D[N_FIL][N_COL], int& silla, int resultado[N_EST], bool examen_fin[N_EST], int& silla1, int& silla2, int pareja[], int& levantado, int& terminado) {
     // esperar por una silla libre
     int miFila;
     int miPareja;
-    <await (silla<2) // una de las dos esté libre
+    //<await (silla<2) // una de las dos esté libre
         
         if(silla = 0){
             silla1 = nip;
@@ -51,56 +60,57 @@ void Estudiante(int nip,int& fila,  bool& hayFila, int D[N_FIL][N_COL], int& sil
             silla2 = nip;
             silla++;
         }
-    > 
+    // > 
     
     //esperar me sea asignada pareja y fila
-    <await (hayFila = true)
+    // <await (hayFila = true)
         miFila = fila;
         miPareja = pareja[nip];
-        levantado++;>
+        levantado++;//>
         if (nip<miPareja) {
             // calcular máx de mi 
             
-            resultado[nip] = maxFila(D,miFila);            
-            
+            resultado[nip] = maxFila(D,miFila);
+            //hacérselo llegar a mi pareja
+            examen_fin[nip]=true; 
         }
         else {
             // calcular la suma de mi fila 
             resultado[nip] = sumaFila(D, miFila);
             //coger info de max (de mi pareja) 
-            <await(examen_fin[miPareja]= true)>
+            // <await(examen_fin[miPareja]= true)>
             //mostrar resultados
             cout << to_string(miFila) + "|  " + to_string(miPareja) + "-" + to_string(nip) +  "|  " + to_string(resultado[miPareja]) +"|  " + to_string(resultado[nip]) + '\n';
             //comunicar finalizacíon
-            
+            //<
+            terminado++;
+            //>;
             
 
     } 
-        <examen_fin[nip]=true; 
-        terminado++;>
 }
 
 //----------------------------------------------------
-void Profesor (int& silla, int& silla1, int& silla2, int pareja[N_EST], int fila, bool& hayFila) {
+void Profesor (int& silla, int& silla1, int& silla2, int pareja[N_EST], int fila, bool& hayFila, int& levantado, int& terminado) {
     for(int i=0; i<N_FIL; i++) {
        
         // esperar a que haya dos
-        <await silla = 2
+        //<await silla = 2
             //comunicar a cada uno su pareja, y la fila que les toca
             pareja[silla1]= silla2;
             pareja[silla2] = silla1;
             fila = i;
-            hayFila = true;>
-        <await (levantado == 2)
+            hayFila = true;//>
+        //<await (levantado == 2)
             silla = 0;
             hayFila = false;
-            levantado=0>
+            levantado = 0;//>
 
     }
     // esperar que todos hayan terminado
-    <await terminado == 60
+    //<await terminado == 60
     //fin examen 
-    >
+   //>
 
 }
 
@@ -141,10 +151,10 @@ int main(){
     thread Estu[60]; 
     thread Profe;
     
-    Profe= thread(&Profesor, ref(silla), ref(silla1), ref(silla2), ref(pareja), ref(fila), ref(hayFila), ref(rprimer),ref(rsegundo),ref(rtercero),ref(rcuarto),ref(rquinto), ref(rsexto), ref(examen_fin), terminado,ref(testigo), ref(a), ref(b), ref(c), ref(d), ref(e), ref(f), ref(levantado));
+    Profe= thread(&Profesor, ref(silla), ref(silla1), ref(silla2), ref(pareja), ref(fila), ref(hayFila), ref(terminado), ref(levantado), ref(terminado));
    
     for(int i=0; i<N_EST; i++){
-        Estu[i]= thread(&Estudiante, i, ref(fila), ref(hayFila), ref(D), ref(silla), ref(resultado), ref(examen_fin), ref(silla1), ref(silla2), ref(pareja), ref(rprimer),ref(rsegundo),ref(rtercero),ref(rcuarto),ref(rquinto), ref(rsexto),ref(testigo) ,ref(a), ref(b), ref(c), ref(d), ref(e), ref(f), ref(terminado), ref(levantado));
+        Estu[i]= thread(&Estudiante, i, ref(fila), ref(hayFila), ref(D), ref(silla), ref(resultado), ref(examen_fin), ref(silla1), ref(silla2), ref(pareja), ref(levantado),ref(terminado));
     }
     
     Profe.join();
