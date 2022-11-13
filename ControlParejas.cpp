@@ -30,10 +30,8 @@ void ControlParejas::sillasVacias(int nip) {
     silla++;
   }
   hayDosSentados.notify_one();
-  
-
 };
-void ControlParejas::filaDisponible(int &miFila, int nip, int& miPareja) {
+void ControlParejas::filaDisponible(int &miFila, int nip, int &miPareja) {
   unique_lock<mutex> lck(mtxMonitor);
   while (!hayFila) {
     hayFilaDisponible.wait(lck);
@@ -53,7 +51,6 @@ void ControlParejas::heTerminado(int miFila) {
   // unique_lock<mutex> lck(mtxMonitor);
   examen_fin[miFila] = true;
   terminado++;
-//   cout<<to_string(terminado)+'\n';
   todosHanTerminado.notify_one();
   haTerminadoCompa.notify_all();
 };

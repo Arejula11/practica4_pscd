@@ -69,9 +69,7 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
                 "|  " + to_string(resultado[nip]) + '\n';
   }
   // hacérselo llegar a mi pareja
-//   cout<<to_string(nip)+"HE TERMINADO\n";
   monControlParejas.heTerminado(miFila);
-
 }
 
 //----------------------------------------------------
@@ -108,7 +106,6 @@ void leerFich(int D[N_FIL][N_COL]) {
 
 int main() {
   int D[N_FIL][N_COL]; // para almacenar los datos
-//   cout<<"1"<<endl;
   ControlParejas monControlParejas;
   int resultado[N_EST];
 
@@ -116,8 +113,6 @@ int main() {
   leerFich(D);
   thread Estu[60];
   thread Profe;
-//   cout<<"leido"<<endl;
-
   Profe = thread(&Profesor, ref(monControlParejas));
 
   for (int i = 0; i < N_EST; i++) {

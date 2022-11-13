@@ -9,9 +9,9 @@ const int N_COL = 1000;      // # de columnas
 class ControlParejas {
 public:
   ControlParejas();
-//   ~ControlParejas();
+  //   ~ControlParejas();
   void sillasVacias(int nip);
-  void filaDisponible(int &miFila, int nip, int& miPareja);
+  void filaDisponible(int &miFila, int nip, int &miPareja);
   void compaTerminado(int miFila, int nip);
   void heTerminado(int miFila);
   void dosSentados(int i);
@@ -26,7 +26,7 @@ private:
   int pareja[N_EST];
   bool hayFila;
   int miPareja;
-  bool examen_fin[N_EST];
+  bool examen_fin[N_FIL];
   int terminado;
   int levantado;
   mutex mtxMonitor;
