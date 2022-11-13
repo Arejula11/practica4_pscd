@@ -2,7 +2,7 @@
 * File:   practica_4.cpp
 * Author: Pablo Angusto Delgado 842255 y Miguel Aréjula Aisa 850068
 * Date:   noviembre 2022
-* Coms:   Práctica 3 de PSCD
+* Coms:   Práctica 4 de PSCD
 *         Compilar mediante
 *          make -f Makefile_p3
 * ----------------------------------------------------------------------------- */
