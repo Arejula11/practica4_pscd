@@ -4,7 +4,7 @@
  * Date:   noviembre 2022
  * Coms:   Práctica 4 de PSCD
  *         Compilar mediante
- *          make 
+ *          make
  * -----------------------------------------------------------------------------
  */
 
@@ -69,7 +69,7 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
                 "|  " + to_string(resultado[nip]) + '\n';
   }
   // hacérselo llegar a mi pareja
-  monControlParejas.heTerminado(miFila);
+  monControlParejas.heTerminado(miFila, nip);
 }
 
 //----------------------------------------------------
@@ -112,26 +112,26 @@ int main() {
   int resultado[N_EST];
 
   // cargar "datos.txt" en "D"
-  if(leerFich(D)){
+  if (leerFich(D)) {
     thread Estu[60];
-  thread Profe;
-  Profe = thread(&Profesor, ref(monControlParejas));
+    thread Profe;
+    Profe = thread(&Profesor, ref(monControlParejas));
 
-  for (int i = 0; i < N_EST; i++) {
-    Estu[i] = thread(&Estudiante, ref(monControlParejas), i, ref(D), ref(resultado));
-  }
+    for (int i = 0; i < N_EST; i++) {
+      Estu[i] = thread(&Estudiante, ref(monControlParejas), i, ref(D),
+                       ref(resultado));
+    }
 
-  Profe.join();
-  for (int i = 0; i < N_EST; i++) {
-    Estu[i].join(); // me bloqueo hasta que "P[i]" termine
-  }
+    Profe.join();
+    for (int i = 0; i < N_EST; i++) {
+      Estu[i].join(); // me bloqueo hasta que "P[i]" termine
+    }
 
-  cout << '\n';
-  cout << "Prueba finalizada\n";
-  return 0;
-  }else{
-    cout<<"Error\n";
+    cout << '\n';
+    cout << "Prueba finalizada\n";
+    return 0;
+  } else {
+    cout << "Error\n";
     return 1;
   }
-  
 }

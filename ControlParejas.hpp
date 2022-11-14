@@ -23,7 +23,7 @@ public:
   void sillasVacias(int nip);
   void filaDisponible(int &miFila, int nip, int &miPareja);
   void compaTerminado(int miFila, int nip);
-  void heTerminado(int miFila);
+  void heTerminado(int miFila, int nip);
   void dosSentados(int i);
   void almsLevantados();
   void todosTerminado();
@@ -46,4 +46,5 @@ private:
   condition_variable hayDosSentados;
   condition_variable seHanLevantado;
   condition_variable todosHanTerminado;
+  
 };
