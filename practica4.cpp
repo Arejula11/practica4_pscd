@@ -13,6 +13,7 @@
 #include <iomanip>
 #include <iostream>
 #include <thread>
+#include <cstdlib>
 
 using namespace std;
 
@@ -55,7 +56,9 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
   monControlParejas.filaDisponible(miFila, nip, miPareja);
   //>
   if (nip < miPareja) {
-    // calcular máx de mi
+    // calcular máx de mi fila
+    srand(time(NULL));
+    this_thread::sleep_for(chrono::milliseconds(rand()% 500 +1 ));
     resultado[nip] = maxFila(D, miFila);
   } else {
     // calcular la suma de mi fila

@@ -15,6 +15,7 @@ using namespace std;
 const int N_EST = 60;        // # de estudiantes
 const int N_FIL = N_EST / 2; // # de filas en la matriz
 const int N_COL = 1000;      // # de columnas
+const int ASIENTOS = 2; //# de sillas en la puerta
 
 class ControlParejas {
 public:
