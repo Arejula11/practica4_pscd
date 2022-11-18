@@ -12,7 +12,7 @@
 #include <iostream>
 
 using namespace std;
-
+//Constructor de la clase ControlParejas
 ControlParejas::ControlParejas() {
   silla = 0;
   hayFila = false;
@@ -24,7 +24,11 @@ ControlParejas::ControlParejas() {
     examen_fin[i] = false; // inicializar vector
   }
 }
-// ControlParejas::~ControlParejas() { }
+
+//Deconstructor de la case ControlParejas
+ControlParejas::~ControlParejas() { }
+
+//Await silla < 2
 void ControlParejas::sillasVacias(int nip) {
   unique_lock<mutex> lck(mtxMonitor);
   while (silla >= ASIENTOS) {
@@ -38,7 +42,9 @@ void ControlParejas::sillasVacias(int nip) {
     silla++;
   }
   hayDosSentados.notify_one();
-};
+};//no se si es necesario estos puntos y comas
+
+//Await hayFila = true
 void ControlParejas::filaDisponible(int &miFila, int nip, int &miPareja) {
   unique_lock<mutex> lck(mtxMonitor);
   while (!hayFila) {
@@ -49,12 +55,16 @@ void ControlParejas::filaDisponible(int &miFila, int nip, int &miPareja) {
   levantado++;
   seHanLevantado.notify_one();
 };
+
+//Await examen_fin[miPareja] = true
 void ControlParejas::compaTerminado(int miFila, int nip) {
   unique_lock<mutex> lck(mtxMonitor);
   while (!examen_fin[miFila]) {
     haTerminadoCompa.wait(lck);
   }
 };
+
+//Await true
 void ControlParejas::heTerminado(int miFila, int nip) {
   unique_lock<mutex> lck(mtxMonitor);
   examen_fin[miFila] = true;
@@ -63,6 +73,8 @@ void ControlParejas::heTerminado(int miFila, int nip) {
    haTerminadoCompa.notify_all(); // revisar con línea de abajo
   // haTerminadoCompa.notify_one(); //no estoy seguro
 };
+
+//Await silla = 2
 void ControlParejas::dosSentados(int i) {
   unique_lock<mutex> lck(mtxMonitor);
   while (silla != ASIENTOS) {
@@ -76,6 +88,8 @@ void ControlParejas::dosSentados(int i) {
   hayFilaDisponible.notify_one();
   hayFilaDisponible.notify_one();
 };
+
+//Await levantado = 2
 void ControlParejas::almsLevantados() {
   unique_lock<mutex> lck(mtxMonitor);
   while (levantado != ASIENTOS) {
@@ -89,6 +103,8 @@ void ControlParejas::almsLevantados() {
   haySillasVacias.notify_one();
   
 };
+
+//Await termiando = 60
 void ControlParejas::todosTerminado() {
   unique_lock<mutex> lck(mtxMonitor);
   while (terminado != 60) {

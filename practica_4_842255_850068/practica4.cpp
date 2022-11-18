@@ -57,8 +57,8 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
   //>
   if (nip < miPareja) {
     // calcular máx de mi fila
-    srand(time(NULL));
-    this_thread::sleep_for(chrono::milliseconds(rand()% 500 +1 ));
+    // srand(time(NULL));
+    // this_thread::sleep_for(chrono::milliseconds(rand()% 500 +1 ));
     resultado[nip] = maxFila(D, miFila);
   } else {
     // calcular la suma de mi fila
@@ -92,7 +92,7 @@ void Profesor(ControlParejas &monControlParejas) {
   // fin examen
   //>
 }
-
+// Inserta los datos del fichero "datos.txt" en la matriz D
 bool leerFich(int D[N_FIL][N_COL]) {
   ifstream f("datos.txt");
   if (f.is_open()) {
@@ -112,12 +112,12 @@ bool leerFich(int D[N_FIL][N_COL]) {
 int main() {
   int D[N_FIL][N_COL]; // para almacenar los datos
   ControlParejas monControlParejas;
-  int resultado[N_EST];
+  int resultado[N_EST]; // vector que almacena los resultados de cada estudiante
 
   // cargar "datos.txt" en "D"
   if (leerFich(D)) {
-    thread Estu[60];
-    thread Profe;
+    thread Estu[60]; // declaración de los procesos estudiantes
+    thread Profe;  // declaración del proceso profesor
     Profe = thread(&Profesor, ref(monControlParejas));
 
     for (int i = 0; i < N_EST; i++) {
@@ -125,16 +125,16 @@ int main() {
                        ref(resultado));
     }
 
-    Profe.join();
+    Profe.join(); // me bloqueo hasta que "Profe" termine
     for (int i = 0; i < N_EST; i++) {
-      Estu[i].join(); // me bloqueo hasta que "P[i]" termine
+      Estu[i].join(); // me bloqueo hasta que "Estu[i]" termine
     }
 
     cout << '\n';
-    cout << "Prueba finalizada\n";
+    cout << "Prueba finalizada\n"; // Indica finalización del programa 
     return 0;
   } else {
-    cout << "Error\n";
+    cerr << "Error\n"; // en caso de que no se haya podido leer el fichero muestra mensaje de error
     return 1;
   }
 }
