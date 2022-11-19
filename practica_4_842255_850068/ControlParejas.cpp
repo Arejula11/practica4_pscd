@@ -64,13 +64,13 @@ void ControlParejas::compaTerminado(int miFila, int nip) {
   }
 };
 
-//Await true
+//Await true 
 void ControlParejas::heTerminado(int miFila, int nip) {
   unique_lock<mutex> lck(mtxMonitor);
   examen_fin[miFila] = true;
   terminado++;
   todosHanTerminado.notify_one();
-  haTerminadoCompa.notify_all(); // revisar con línea de abajo
+  haTerminadoCompa.notify_all();
   
 };
 
@@ -84,7 +84,6 @@ void ControlParejas::dosSentados(int i) {
   pareja[silla2] = silla1;
   fila = i;
   hayFila = true;
-  // hayFilaDisponible.notify_all();
   hayFilaDisponible.notify_one();
   hayFilaDisponible.notify_one();
 };
@@ -98,13 +97,12 @@ void ControlParejas::almsLevantados() {
   silla = 0;
   hayFila = false;
   levantado = 0;
-  // haySillasVacias.notify_all();
   haySillasVacias.notify_one();
   haySillasVacias.notify_one();
   
 };
 
-//Await termiando = 60
+//Await terminado = 60
 void ControlParejas::todosTerminado() {
   unique_lock<mutex> lck(mtxMonitor);
   while (terminado != 60) {

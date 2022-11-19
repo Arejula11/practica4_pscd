@@ -57,8 +57,6 @@ void Estudiante(ControlParejas &monControlParejas, int nip, int D[N_FIL][N_COL],
   //>
   if (nip < miPareja) {
     // calcular máx de mi fila
-    srand(time(NULL));
-    this_thread::sleep_for(chrono::milliseconds(rand()% 500 +1 ));
     resultado[nip] = maxFila(D, miFila);
   } else {
     // calcular la suma de mi fila
