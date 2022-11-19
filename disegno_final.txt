@@ -4,7 +4,7 @@
 * Date:   noviembre 2022
 * Coms:   Práctica 4 de PSCD
 *         Compilar mediante
-*          make 
+*          make -f Makefile_p4
 * ----------------------------------------------------------------------------- */
 
 const int N_EST = 60; //# de estudiantes
