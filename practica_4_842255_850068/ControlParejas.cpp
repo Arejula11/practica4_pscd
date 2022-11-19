@@ -42,7 +42,7 @@ void ControlParejas::sillasVacias(int nip) {
     silla++;
   }
   hayDosSentados.notify_one();
-};//no se si es necesario estos puntos y comas
+};
 
 //Await hayFila = true
 void ControlParejas::filaDisponible(int &miFila, int nip, int &miPareja) {
@@ -70,8 +70,8 @@ void ControlParejas::heTerminado(int miFila, int nip) {
   examen_fin[miFila] = true;
   terminado++;
   todosHanTerminado.notify_one();
-   haTerminadoCompa.notify_all(); // revisar con línea de abajo
-  // haTerminadoCompa.notify_one(); //no estoy seguro
+  haTerminadoCompa.notify_all(); // revisar con línea de abajo
+  
 };
 
 //Await silla = 2
